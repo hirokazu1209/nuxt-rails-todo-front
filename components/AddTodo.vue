@@ -24,7 +24,10 @@ export default {
   },
   methods: {
     handleSubmit() {
-      this.title = ""
+      // トリガーする:submitというイベントが起こったらその処理を実行する
+      // 第一引数：イベント名 第二引数：イベントとして渡される値（TODOの情報を受け取って、TodoList.vueに渡すコード）
+      this.$emit("submit", this.title);
+      this.title = "";
     }
   }
 };

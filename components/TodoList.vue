@@ -15,14 +15,10 @@
 
 <script>
 export default {
+  // 親コンポーネントから子コンポーネントに値を渡す時に使うもの
+  props: ["todos"],
   data() {
     return {
-      todos: [
-        {
-          title: "test",
-          usename: "太郎"
-        }
-      ],
       search: "",
       headers: [
         {
