@@ -1,6 +1,9 @@
 <template>
   <div>
-    <AddTodo @submit="appTodo" />
+    <!-- AddTodo.vueからsubmitというイベントがきたら、methodsに登録したaddTodoを呼び出す -->
+    <AddTodo @submit="addTodo" />
+    <!-- = の右側のtodosは今回渡している値 -->
+    <!-- = の左側のtodosはTodoList.vueで使っている値（propsで定義しているコード） -->
     <TodoList :todos="todos" />
   </div>
 </template>
