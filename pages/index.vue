@@ -12,6 +12,7 @@
   // "@" エイリアス トップディレクトリを指す
   import AddTodo from "@/components/AddTodo";
   import TodoList from "@/components/TodoList";
+  import axios from "@/plugins/axios";
 
   export default {
     // 作成したコンポーネントを登録する
@@ -24,8 +25,12 @@
         todos: [],
       };
     },
+    created() {
+      console.log("API_KEY:", process.env.API_KEY);
+    },
     methods: {
-      addTodo(title) {
+      async addTodo(title) {
+        await axios.post("/v1/todos", {title});
         this.todos.push({
           title
         });
