@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div v-if="user">
+    <p>名前:{{ user.name }}</p>
     <!-- AddTodo.vueからsubmitというイベントがきたら、methodsに登録したaddTodoを呼び出す -->
     <AddTodo @submit="addTodo" />
     <!-- = の右側のtodosは今回渡している値 -->
@@ -24,6 +25,14 @@
       return {
         todos: [],
       };
+    },
+    // ここで宣言した値は、vueプロパティの中で使用できる
+    computed: {
+      user() {
+        // storeの中のauth.jsのstateのcurrentUserという値が返される
+        // this.$storeの記述でVuexのstoreの情報を得られる
+        return this.$store.state.auth.currentUser;
+      }
     },
     created() {
       console.log("API_KEY:", process.env.API_KEY);
