@@ -4,7 +4,7 @@
       <h2>Sign Up</h2>
       <form>
         <v-text-field v-model="name" :counter="10" label="Name" data-vv-name="name" required></v-text-field>
-        <v-text-field v-model="email" :counter="20" label="Email" data-vv-name="emaik" required></v-text-field>
+        <v-text-field v-model="email" :counter="20" label="Email" data-vv-name="email" required></v-text-field>
         <v-text-field
           v-model="password"
           label="password"
@@ -31,7 +31,7 @@
 </template>
 <script>
 import axios from "@/plugins/axios";
-import firebase from "@/pligins/firebase";
+import firebase from "@/plugins/firebase";
 
 export default {
   data() {
@@ -51,8 +51,12 @@ export default {
         this.error = "※パスワードとパスワード確認が一致していません";
       }
       const res = await firebase
+      // メールアドレスとパスワードを使用して、Authenticationの機能を利用出来る
+      // Firebase側ではメールとパスワードに対応したuidというユーザーを特定するためのコードが発行される
         .auth()
         .createUserWithEmailAndPassword(this.email, this.password)
+        // エラーがあった時の実装 <p v-if="error" class="errors">{{ error }}</p>で表示する
+        // エラーが発生した場合、data()で定義されているerrorプロパティの値が入る
         .catch(error => {
           this.error = (code => {
             switch(code) {
@@ -67,13 +71,15 @@ export default {
             }
           })(error.code);
         });
-
+      // Firebase側の処理が終わったら、const user = の部分でFirebaseから帰ってきた値を元に
+      // userオブジェクト情報を作成
       const user = {
         email: res.user.email,
         name: this.name,
         uid: res.user.uid
       };
-
+      // 作成したユーザー情報を元に、APIへpostのリクエストを行う
+      // /v1/usersへのPOSTリクエストは、UserControllerのcreateアクションに対応している
       await axios
       .post("/v1/users", {
         user
@@ -83,7 +89,7 @@ export default {
           err
         });
       });
-
+      // 新規登録完了後、todo一覧画面に遷移する
       this.$router.push("/");
     }
   }
