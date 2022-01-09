@@ -78,17 +78,28 @@ export default {
         name: this.name,
         uid: res.user.uid
       };
+
+      this.$store.dispatch("loading/setLoading", true);
       // 作成したユーザー情報を元に、APIへpostのリクエストを行う
       // /v1/usersへのPOSTリクエストは、UserControllerのcreateアクションに対応している
       await axios
       .post("/v1/users", {
         user
       })
-      .catch(err => {
+      const { // const { data } = を追加
+        data
+        } = await axios.post("/v1/users", {
+          user
+        }).catch((err) => {
         console.log({
           err
         });
       });
+
+      setTimeout(() => {
+        this.$store.dispatch("loading/setLoading", false);
+      }, 3000);
+      this.$store.dispatch("auth/setUser", data);
       // 新規登録完了後、todo一覧画面に遷移する
       this.$router.push("/");
     }
