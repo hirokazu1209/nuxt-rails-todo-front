@@ -22,11 +22,18 @@ export default {
       title:""
     };
   },
+  computed: {
+    user() {
+      return this.$store.state.auth.currentUser;
+    },
+  },
   methods: {
     handleSubmit() {
-      // トリガーする:submitというイベントが起こったらその処理を実行する
-      // 第一引数：イベント名 第二引数：イベントとして渡される値（TODOの情報を受け取って、TodoList.vueに渡すコード）
-      this.$emit("submit", this.title);
+      const todo = {
+        title: this.title,
+        user_id: this.user.id,
+      };
+      this.$emit("submit", todo);
       this.title = "";
     }
   }
