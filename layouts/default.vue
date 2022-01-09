@@ -1,5 +1,8 @@
 <template>
   <v-app dark>
+    <div>
+      <Loading/>
+    </div>
     <v-navigation-drawer
       v-model="drawer"
       :mini-variant="miniVariant"
@@ -8,6 +11,7 @@
       app
     >
       <v-list>
+        <!-- Vuetifyに用意されている、複数のアイテムをリストへ表示させるときに使用する -->
         <v-list-item
           v-for="(item, i) in items"
           :key="i"
@@ -89,29 +93,52 @@
 </template>
 
 <script>
+import Loading from "@/components/Loading";
 export default {
-  name: 'DefaultLayout',
-  data () {
+  data() {
     return {
       clipped: false,
       drawer: false,
       fixed: false,
-      items: [
-        {
-          icon: 'mdi-apps',
-          title: 'Welcome',
-          to: '/'
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
-        }
-      ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Vuetify.js'
+      title: 'TODO App'
+    }
+  },
+  components: {
+    Loading
+  },
+  computed: {
+    user() {
+      return this.$store.state.auth.currentUser;
+    },
+    items() {
+      if(this.user) {
+        return [
+          {
+            icon: "mdi-apps",
+            title: "TODOS",
+            // 遷移先の指定ができる
+            to: "/"
+          },
+          {
+            icon: "mdi-chart-bubble",
+            title: "MYPAGE",
+            // 遷移先の指定ができる
+            to: "/mypage"
+          }
+        ];
+      } else {
+        return [
+          {
+            icon: "mdi-chart-bubble",
+            title: "SIGNUP",
+            // 遷移先の指定ができる
+            to: "/signup"
+          }
+        ];
+      }
     }
   }
 }
