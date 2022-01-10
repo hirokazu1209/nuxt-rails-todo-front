@@ -29,6 +29,21 @@ export default {
       this.$router.push("/login");
     },
   },
+  // 第一引数は自動的にcontextオブジェクトが入るため
+  // contextオブジェクト：リクエスト情報やパラメータなどのデータが入っているオブジェクト
+  fetch({
+    store,
+    redirect
+  }) {
+    store.watch(
+      state => state.auth.currentUser,
+      (newUser, oldUser) => {
+        if(!newUser) {
+          return redirect("/login");
+        }
+      }
+    );
+  },
 };
 </script>
 

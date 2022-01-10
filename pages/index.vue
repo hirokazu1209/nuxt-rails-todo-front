@@ -47,6 +47,17 @@
         });
       },
     },
+    fetch({
+    }) {
+      store.watch(
+        state => state.auth.currentUser,
+        (newUser, oldUser) => {
+          if(!newUser) {
+            return redirect("/login");
+          }
+        }
+      );
+    },
   };
 
 </script>
