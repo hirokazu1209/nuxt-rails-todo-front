@@ -2,6 +2,7 @@
   <v-app dark>
     <div>
       <Loading/>
+      <Success/>
     </div>
     <v-navigation-drawer
       v-model="drawer"
@@ -94,21 +95,23 @@
 
 <script>
 import Loading from "@/components/Loading";
-export default {
-  data() {
-    return {
-      clipped: false,
-      drawer: false,
-      fixed: false,
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: 'TODO App'
-    }
-  },
-  components: {
-    Loading
-  },
+import Success from "@/components/Success"; //追加
+  export default {
+    data() {
+      return {
+        clipped: false,
+        drawer: false,
+        fixed: false,
+        miniVariant: false,
+        right: true,
+        rightDrawer: false,
+        title: 'TODO App'
+      }
+    },
+    components: {
+      Loading,
+      Success  //追加
+    },
   computed: {
     user() {
       return this.$store.state.auth.currentUser;
