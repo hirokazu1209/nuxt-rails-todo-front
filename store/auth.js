@@ -1,6 +1,6 @@
 // currentUserの値として現在のログイン情報、ユーザー情報の入れものを作成
 export const state = () => ({
-  currentUser:{}
+  currentUser: {}
 });
 
 export const mutations = {

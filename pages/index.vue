@@ -45,6 +45,8 @@
       },
     },
     fetch({
+      store,
+      redirect
     }) {
       store.watch(
         state => state.auth.currentUser,
