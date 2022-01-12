@@ -1,8 +1,8 @@
 <template>
   <v-app dark>
     <div>
-      <Loading/>
       <Success/>
+      <Loading/>
     </div>
     <v-navigation-drawer
       v-model="drawer"
